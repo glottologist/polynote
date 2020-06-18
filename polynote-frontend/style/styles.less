@@ -64,11 +64,28 @@ body {
   font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
   font-size: 10pt;
   margin: 0;
-  padding: @toolbar-height 0 0;
 }
 
 #Logo {
 
+}
+
+.main-ui {
+  display: grid;
+  grid-template-areas: "header"
+                       "body";
+  grid-template-columns: 100%;
+  grid-template-rows: max-content 1fr;
+  overflow: hidden;
+  height: 100vh;
+
+  .header {
+    grid-area: header;
+  }
+  .body {
+    grid-area: body;
+    overflow: hidden;
+  }
 }
 
 .toolbar-container {
@@ -79,11 +96,6 @@ body {
   z-index: 2;
 
   user-select: none;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
 
   .text {
     display: none;
@@ -127,7 +139,6 @@ body {
     }
 
     h3 {
-      position: absolute;
       bottom: 6px;
       font-size: 100%;
       font-weight: normal;
@@ -437,7 +448,7 @@ body {
 
     .cell-footer {
       display: none;
-      grid-template-columns: [vim] auto [exec-info] max-content;
+      grid-template-columns: [exec-info] max-content;
       grid-template-rows: auto;
       padding: 2px 4px 2px 4px;
       line-height: 1.5;
@@ -445,14 +456,6 @@ body {
       border-top: 1px dashed @ui-border;
     }
 
-    .vim-status {
-      white-space: pre;
-      font-family: 'Hasklig', 'Fira Code', 'Menlo', fixed;
-
-      &.hide {
-        display: none !important;
-      }
-    }
   }
 
   &.code-cell:hover .cell-input-tools .options {
@@ -1427,11 +1430,6 @@ body {
   border-color: #faebcc;
 }
 
-.vim-enabled.cell-container.code-cell .cell-input .cell-footer {
-  display: grid;
-  height: 1.5em;
-}
-
 button {
 
   padding: 8px;
@@ -1535,11 +1533,44 @@ button.inspect.icon-button {
 }
 
 .notebook-content {
-  overflow-y: auto;
-  padding: 2px;
-  border-left: 1px solid @ui-border;
-  border-right: 1px solid @ui-border;
-  border-bottom: 1px solid @ui-border;
+  display: grid;
+  grid-template-areas: "notebook"
+                       "vim";
+  grid-template-columns: 100%;
+  grid-template-rows: 1fr min-content;
+  overflow: hidden;
+
+  .notebook-cells {
+    grid-area: notebook;
+    padding: 12pt;
+    padding-bottom: 50vh; // allow last cell to scroll up to midpoint
+    overflow-y: auto;
+    border-left: 1px solid @ui-border;
+    border-right: 1px solid @ui-border;
+    border-bottom: 1px solid @ui-border;
+  }
+
+  .vim-status {
+    grid-area: vim;
+    white-space: pre;
+    font-family: 'Hasklig', 'Fira Code', 'Menlo', fixed;
+
+    width: 100%;
+    background: white;
+    border: solid lightgray 1px;
+    padding: 3px;
+    font-size: large;
+
+    &.status:empty {
+      height: 100px;
+      background: green;
+      display: none !important;
+    }
+
+    &.hide {
+      display: none !important;
+    }
+  }
 }
 
 @keyframes fadeOut {
@@ -1613,7 +1644,6 @@ button.inspect.icon-button {
 
 .kernel-ui {
   background-color: @ui-background;
-  border-left: 1px solid @ui-border;
 
   max-height: 100%;
   width: 100%;
@@ -2001,11 +2031,7 @@ button {
 }
 
 .split-view {
-  position: absolute;
-  top: 68px;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: 100%;
   display: grid;
   grid-template-areas: "left leftdrag center rightdrag right";
   grid-template-columns: max-content 1px auto 1px max-content;
@@ -2381,12 +2407,6 @@ button.dialog-button {
 
 .create-notebook {
   color: green;
-}
-
-.notebook-cells {
-  position: relative;
-  padding: 12pt;
-  margin-bottom: 50vh; // allow last cell to scroll up to midpoint
 }
 
 .latex-editor {
