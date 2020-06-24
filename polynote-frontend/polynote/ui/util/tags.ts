@@ -401,3 +401,7 @@ export function details(classes: string[], summary: Content, content: Content) {
     appendContent(el, content);
     return el;
 }
+
+export function loader(classes: string[] = []) {
+    return div([...classes, 'loader'], [])
+}
