@@ -1534,14 +1534,14 @@ button.inspect.icon-button {
 
 .notebook-content {
   display: grid;
-  grid-template-areas: "notebook"
-                       "vim";
-  grid-template-columns: 100%;
-  grid-template-rows: 1fr min-content;
+  //grid-template-areas: "notebook"
+  //                     "vim";
+  //grid-template-columns: 100%;
+  //grid-template-rows: 1fr min-content;
   overflow: hidden;
 
   .notebook-cells {
-    grid-area: notebook;
+    //grid-area: notebook;
     padding: 12pt;
     padding-bottom: 50vh; // allow last cell to scroll up to midpoint
     overflow-y: auto;
@@ -1550,27 +1550,6 @@ button.inspect.icon-button {
     border-bottom: 1px solid @ui-border;
   }
 
-  .vim-status {
-    grid-area: vim;
-    white-space: pre;
-    font-family: 'Hasklig', 'Fira Code', 'Menlo', fixed;
-
-    width: 100%;
-    background: white;
-    border: solid lightgray 1px;
-    padding: 3px;
-    font-size: large;
-
-    &.status:empty {
-      height: 100px;
-      background: green;
-      display: none !important;
-    }
-
-    &.hide {
-      display: none !important;
-    }
-  }
 }
 
 @keyframes fadeOut {
@@ -2134,9 +2113,13 @@ button {
 
 .tab-view {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-areas: "tabs"
+                       "notebook"
+                       "vim";
+  grid-template-rows: auto 1fr min-content;
 
   .tab-container {
+    grid-area: tabs;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -2189,6 +2172,29 @@ button {
       border-bottom: none;
     }
   }
+
+  .vim-status {
+    grid-area: vim;
+    white-space: pre;
+    font-family: 'Hasklig', 'Fira Code', 'Menlo', fixed;
+
+    width: 100%;
+    background: white;
+    border: solid lightgray 1px;
+    padding: 3px;
+    font-size: large;
+
+    &.status:empty {
+      height: 100px;
+      background: green;
+      display: none !important;
+    }
+
+    &.hide {
+      display: none !important;
+    }
+  }
+
 }
 
 .tree-view {
@@ -3227,6 +3233,10 @@ img.icon {
   height: 1em;
 }
 
+.hide {
+  display: none
+}
+
 // cell overlays
 .cell-overlay {
   position: absolute;
@@ -3346,6 +3356,7 @@ img.icon {
           align-self: center;
         }
       }
+
     }
 
     .comment-content {
